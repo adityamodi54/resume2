@@ -1,4 +1,10 @@
 import streamlit as st
+from streamlit_lottie import st_lottie
+import json  # To load and parse the JSON file
+
+def load_lottiefile(filepath):
+    with open(filepath, "r") as file:
+        return json.load(file)
 
 def render_skills():
     st.markdown("""
@@ -45,6 +51,10 @@ def render_education_and_experience():
     """, unsafe_allow_html=True)
 
 def main():
+    # Load local Lottie animation file
+    lottie_animation = load_lottiefile("Animation17.json")  # Ensure the file name matches
+    
+
     # Advanced CSS and HTML for enhanced appearance and icons
     st.markdown("""
         <style>
@@ -70,8 +80,6 @@ def main():
             color: #ff6347; /* Matching the headers */
             padding-right: 10px; /* Space between icon and text */
         }
-
-        /* New styles for education and experience sections */
         .section-title {
             font-weight: bold;
             color: #007bff; /* Blue color for the section titles */
@@ -95,8 +103,6 @@ def main():
         .info-footer {
             color: #777; /* Lighter grey for footer (dates, location) */
         }
-        
-        /* Styles for skills section */
         .skills-title {
             color: #007bff; /* Blue color for the skills title */
             font-weight: bold;
@@ -119,7 +125,13 @@ def main():
         </style>
         """, unsafe_allow_html=True)
 
-    st.title("🧳 Jane Doe's Resume")
+    # Title with animation
+    col1, col2 = st.columns([1, 6])
+    with col1:
+        # This will display the Lottie animation next to the title
+        st_lottie(lottie_animation, height=100, key="resume")
+    with col2:
+        st.title("Adi's Resume")
 
     st.markdown("""
         ## 📞 Contact Information
@@ -139,8 +151,6 @@ def main():
     
     # Render the skills section
     render_skills()
-
-    # ... Include any additional sections you want ...
 
 if __name__ == "__main__":
     main()
